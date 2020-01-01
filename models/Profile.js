@@ -9,12 +9,10 @@ const ProfileSchema = new Schema({
     },
     handle: {
         type: String,
-        required: true,
         max: 40
     },
-    photo: {
-        data: Buffer,
-        contenType: String
+    avatar: {
+        type: String
     },
     company: {
         type: String
@@ -29,12 +27,10 @@ const ProfileSchema = new Schema({
         type: Date
     },
     status: {
-        type: String,
-        required: true
+        type: String
     },
     skills: {
-        type: [String],
-        required: true
+        type: [String]
     },
     bio: {
         type: String
@@ -45,12 +41,10 @@ const ProfileSchema = new Schema({
     experience: [
         {
             title: {
-                type: String,
-                required: true
+                type: String
             },
             company: {
-                type: String,
-                required: true
+                type: String
             },
             locationofjob: {
                 type: String
@@ -75,16 +69,13 @@ const ProfileSchema = new Schema({
     education: [
         {
             school: {
-                type: String,
-                required: true
+                type: String
             },
             degree: {
-                type: String,
-                required: true
+                type: String
             },
             fieldofstudy: {
-                type: String,
-                required: true
+                type: String
             },
             from: {
                 type: Date,

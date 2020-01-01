@@ -17,6 +17,7 @@ const validateLoginInput = require('../../validation/login');
 const User = require('../../models/Users');
 const Role = require('../../models/Role');
 const Permission = require('../../models/Permission');
+const Profile = require('../../models/Profile');
 
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -111,17 +112,24 @@ router.get(
 
 
 router.post('/upload', (req, res) => {
-    var form = new formidable.IncomingForm();
-    form.parse(req).on('field', function (name, field) {
-        console.log('Got a field:', name);
-    }).on('fileBegin', function (name, file) {
-        let directory = 'uploads/' + file.name;
-        file.path = directory;
-    }).on('file', function (name, file) {
-        console.log(file.name);
-    });
-    console.log(form);
+    let user_id = req.query.user_id;
+    Profile.findOne({ user: user_id })
+        .then(model => {
+            var form = new formidable.IncomingForm();
+            form.parse(req);
+            form.on('fileBegin', function (name, file) {
+                file.path = __dirname + '../../../public/images/' + file.name;
+            });
+            form.on('file', function (name, file) {
+                let avatar = 'http://localhost:5000/images/' + file.name;
+                model.avatar = avatar;
+                model.save();
+                res.json({
+                    'status': 'success',
+                    'message': 'File updated successfully',
+                    'avatar': avatar
+                })
+            });
+        })
 });
-
-
 module.exports = router;

@@ -48,6 +48,7 @@ app.use('/api/posts', posts);
 app.use('/api/users', user);
 app.use('/api/roles', role);
 app.use('/api/permissions', permission);
+app.use(express.static('public'))
 
 const port = process.env.PORT || 5000;
 
