@@ -18,9 +18,11 @@ const User = require('../../models/Users');
 router.get('/:id', (req, res) => {
     Profile.findOne({ user: req.params.id })
         .then(model => {
+            console.log(model);
             res.json({
                 'model': model
             });
         }).catch(err => res.status(404).json(err));
 });
+
 module.exports = router;
